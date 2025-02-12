@@ -56,30 +56,9 @@ const Production = () => {
 
   return (
     <div className="container">
-      {/* Sidebar for Employee List */}
       <div className="sidebar">
-        <h3 className="title">Employees</h3>
+        <h2 className="title">Employees</h2>
         
-        {/* Show Input Box Only When "Add Employee" Button is Clicked */}
-        {showInput ? (
-          <div className="employee-input">
-            <input
-              type="text"
-              placeholder="Enter employee name"
-              value={employeeName}
-              onChange={(e) => setEmployeeName(e.target.value)}
-              className="input-box"
-            />
-            <button onClick={addEmployee} className="add-button">
-              ✅
-            </button>
-          </div>
-        ) : (
-          <button onClick={() => setShowInput(true)} className="add-button">
-            + Add Employee
-          </button>
-        )}
-
         <div className="employee-list">
           {employees.map((employee) => (
             <button
@@ -91,6 +70,24 @@ const Production = () => {
             </button>
           ))}
         </div>
+        {showInput ? (
+          <div className="employee-input">
+            <input
+              type="text"
+              placeholder="Enter employee name"
+              value={employeeName}
+              onChange={(e) => setEmployeeName(e.target.value)}
+              className="input-box"
+            />
+            <button onClick={addEmployee} className="add-button">
+              ok
+            </button>
+          </div>
+        ) : (
+          <button onClick={() => setShowInput(true)} className="add-button">
+            + Add Employee
+          </button>
+        )}
       </div>
 
       {/* Employee Production Details */}
