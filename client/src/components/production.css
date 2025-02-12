@@ -1,0 +1,97 @@
+.container {
+    display: flex;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    margin: 20px auto;
+  }
+  
+  .sidebar {
+    width: 25%;
+    border-right: 1px solid #ddd;
+    padding: 16px;
+  }
+  
+  .sidebar h3 {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .sidebar button {
+    display: block;
+    width: 100%;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .table-container {
+    width: 75%;
+    padding: 16px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #f3f4f6;
+  }
+  
+  input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  button.save {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button.edit {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button.add-production {
+    background-color: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  button.add-salary {
+    background-color: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
