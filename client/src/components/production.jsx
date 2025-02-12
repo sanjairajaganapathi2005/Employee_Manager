@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Production.css"; // Import CSS file
+import "./production.css"; // Import CSS file
 
 const Production = () => {
   const [employees, setEmployees] = useState([]); // Store employee list
