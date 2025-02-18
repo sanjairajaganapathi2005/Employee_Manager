@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import "./production.css"; 
+import "./production.css";
+
 const Production = () => {
-  const [employees, setEmployees] = useState([]); // Store employee list
+  const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [showInput, setShowInput] = useState(false); // Controls input visibility
-  const [employeeName, setEmployeeName] = useState(""); // Input for new employee
+  const [showInput, setShowInput] = useState(false);
+  const [employeeName, setEmployeeName] = useState("");
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
+  const [showLast20, setShowLast20] = useState(false); // State to toggle 10 or 20 rows
 
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
-    updatedRows[index][field] = value;
+
+    if (field === "count" || field === "amount") {
+      value = value.replace(/\D/g, ""); // Remove non-numeric characters
+      updatedRows[index][field] = value ? parseInt(value, 10) : 0;
+    } else {
+      updatedRows[index][field] = value;
+    }
 
     if (field === "count" || field === "amount") {
       const count = Number(updatedRows[index].count) || 0;
@@ -21,16 +29,27 @@ const Production = () => {
     setRows(updatedRows);
   };
 
+  const getCurrentDateTime = () => {
+    return new Date().toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+  
   const addProduction = () => {
-    setRows([...rows, { description: "", count: 0, amount: 0, total: 0 }]);
+    setRows([...rows, { timestamp: getCurrentDateTime(), description: "", count: 0, amount: 0, total: 0 }]);
     setSavedRows([...savedRows, false]);
   };
-
+  
   const addSalary = () => {
-    setRows([...rows, { description: "salary", count: "-", amount: 0, total: 0 }]);
+    setRows([...rows, { timestamp: getCurrentDateTime(), description: "salary", count: "-", amount: 0, total: 0 }]);
     setSavedRows([...savedRows, false]);
   };
-
+  
   const saveRow = (index) => {
     const updatedSavedRows = [...savedRows];
     updatedSavedRows[index] = true;
@@ -48,8 +67,8 @@ const Production = () => {
   const addEmployee = () => {
     if (employeeName.trim() !== "") {
       setEmployees([...employees, { id: employees.length + 1, name: employeeName }]);
-      setEmployeeName(""); // Clear input after adding
-      setShowInput(false); // Hide input box after adding
+      setEmployeeName("");
+      setShowInput(false);
     }
   };
 
@@ -57,7 +76,7 @@ const Production = () => {
     <div className="container">
       <div className="sidebar">
         <h2 className="title">Employees</h2>
-        
+
         <div className="employee-list">
           {employees.map((employee) => (
             <button
@@ -89,14 +108,15 @@ const Production = () => {
         )}
       </div>
 
-      {/* Employee Production Details */}
       <div className="content">
         {selectedEmployee ? (
           <>
             <h3 className="employee-header">Production Details</h3>
-            <table className="table">
+
+              <table className="table">
               <thead>
                 <tr>
+                  <th>Date & Time</th>
                   <th>Description</th>
                   <th>Count</th>
                   <th>Amount</th>
@@ -105,8 +125,9 @@ const Production = () => {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row, index) => (
+                {rows.slice(- (showLast20 ? 20 : 10)).map((row, index) => (
                   <tr key={index}>
+                    <td>{row.timestamp}</td>
                     <td>
                       <input
                         type="text"
@@ -124,6 +145,8 @@ const Production = () => {
                           className="input-box"
                           disabled={savedRows[index]}
                           onChange={(e) => handleInputChange(index, "count", e.target.value)}
+                          step="1"
+                          min="0"
                         />
                       ) : (
                         "-"
@@ -136,6 +159,8 @@ const Production = () => {
                         className="input-box"
                         disabled={savedRows[index]}
                         onChange={(e) => handleInputChange(index, "amount", e.target.value)}
+                        step="1"
+                        min="0"
                       />
                     </td>
                     <td>{row.total}</td>
@@ -152,14 +177,22 @@ const Production = () => {
                     </td>
                   </tr>
                 ))}
-                {/* Grand Total Row */}
                 <tr className="total-row">
-                  <td colSpan="3">Grand Total:</td>
+                  <td colSpan="4">Grand Total:</td>
                   <td>{grandTotal}</td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
+             {/* Toggle Button */}
+             <button onClick={() => setShowLast20(!showLast20)} className="toggle-button">
+                {showLast20 ? "Show Last 10 Rows" : "Show Last 20 Rows"}
+              </button>
+
+              {/* Row Count Display */}
+              <p className="row-count">Showing last {showLast20 ? 20 : 10} rows</p>
+
+
             <div className="buttons">
               <button className="add-production" onClick={addProduction}>
                 + Add Production
