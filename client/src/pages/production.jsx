@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./production.css";
+import "../styles/production.css";
 
 const Production = () => {
   const [employees, setEmployees] = useState([]);
@@ -8,13 +8,13 @@ const Production = () => {
   const [employeeName, setEmployeeName] = useState("");
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
-  const [showLast20, setShowLast20] = useState(false); // State to toggle 10 or 20 rows
+  const [showLast20, setShowLast20] = useState(false); 
 
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
 
     if (field === "count" || field === "amount") {
-      value = value.replace(/\D/g, ""); // Remove non-numeric characters
+      value = value.replace(/\D/g, ""); 
       updatedRows[index][field] = value ? parseInt(value, 10) : 0;
     } else {
       updatedRows[index][field] = value;

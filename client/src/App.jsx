@@ -1,12 +1,15 @@
-import React from "react";
-import EmployeeProduction from "./components/production.jsx";
+import { Link } from 'react-router-dom';
 
 function App() {
   return (
-    <>
-      <h2 style={{fontSize:"35px",width:"100%",padding:"0 1rem", marginTop:"0.5rem"}} >R C TEX Employee Production Details</h2>
-      <EmployeeProduction />
-    </>
+    <div>
+      <h2 style={{ fontSize: "35px", padding: "0 1rem", marginTop: "0.5rem" }}>
+        R C TEX Employee Production Details
+      </h2>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/login">Admin Login</Link>
+      </nav>
+    </div>
   );
 }
 
