@@ -8,26 +8,29 @@ const Production = () => {
   const [employeeName, setEmployeeName] = useState("");
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
-  const [showLast20, setShowLast20] = useState(false); 
+  const [showLast5, setShowLast5] = useState(false); 
 
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
-
+  
     if (field === "count" || field === "amount") {
-      value = value.replace(/\D/g, ""); 
-      updatedRows[index][field] = value ? parseInt(value, 10) : 0;
-    } else {
+      value = value.replace(/\D/g, "");  
+      updatedRows[index][field] = value || "";  
+    } 
+    else {
       updatedRows[index][field] = value;
     }
 
     if (field === "count" || field === "amount") {
       const count = Number(updatedRows[index].count) || 0;
       const amount = Number(updatedRows[index].amount) || 0;
-      updatedRows[index].total = updatedRows[index].description === "salary" ? -amount : count * amount;
+     updatedRows[index].total = updatedRows[index].description === "salary" ? -amount : count * amount;
     }
-
+  
     setRows(updatedRows);
   };
+  
+  
 
   const getCurrentDateTime = () => {
     return new Date().toLocaleString("en-US", {
@@ -76,7 +79,6 @@ const Production = () => {
     <div className="container">
       <div className="sidebar">
         <h2 className="title">Employees</h2>
-
         <div className="employee-list">
           {employees.map((employee) => (
             <button
@@ -125,7 +127,7 @@ const Production = () => {
                 </tr>
               </thead>
               <tbody>
-                {rows.slice(- (showLast20 ? 20 : 10)).map((row, index) => (
+                {rows.slice(- (showLast5 ? 5 : 15)).map((row, index) => (
                   <tr key={index}>
                     <td>{row.timestamp}</td>
                     <td>
@@ -141,12 +143,13 @@ const Production = () => {
                       {row.description !== "salary" ? (
                         <input
                           type="number"
-                          value={row.count}
+                          value={row.count || ""}  // If zero, set empty string to clear 0
                           className="input-box"
                           disabled={savedRows[index]}
                           onChange={(e) => handleInputChange(index, "count", e.target.value)}
                           step="1"
                           min="0"
+                          placeholder="Enter count"
                         />
                       ) : (
                         "-"
@@ -155,14 +158,16 @@ const Production = () => {
                     <td>
                       <input
                         type="number"
-                        value={row.amount}
+                        value={row.amount || ""}  // If zero, set empty string to clear 0
                         className="input-box"
                         disabled={savedRows[index]}
                         onChange={(e) => handleInputChange(index, "amount", e.target.value)}
                         step="1"
                         min="0"
+                        placeholder="Enter amount"
                       />
                     </td>
+
                     <td>{row.total}</td>
                     <td>
                       {!savedRows[index] ? (
@@ -178,19 +183,19 @@ const Production = () => {
                   </tr>
                 ))}
                 <tr className="total-row">
-                  <td colSpan="4">Grand Total:</td>
-                  <td>{grandTotal}</td>
+                  <td colSpan="4"><h3>Grand Total:</h3></td>
+                  <td><h3>{grandTotal}</h3></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
              {/* Toggle Button */}
-             <button onClick={() => setShowLast20(!showLast20)} className="toggle-button">
-                {showLast20 ? "Show Last 10 Rows" : "Show Last 20 Rows"}
+             <button onClick={() => setShowLast5(!showLast5)} className="toggle-button">
+                {showLast5 ? "Show Last 15 Rows" : "Show Last 5 Rows"}
               </button>
 
               {/* Row Count Display */}
-              <p className="row-count">Showing last {showLast20 ? 20 : 10} rows</p>
+              <p className="row-count">Showing last {showLast5 ? 5 : 15} rows</p>
 
 
             <div className="buttons">
