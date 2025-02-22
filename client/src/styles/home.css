@@ -13,6 +13,17 @@
   background: #307db4; 
 }
 
+button{
+background-color: #11a04c;
+  color: white;
+  padding: 12px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
 .section {
   padding: 40px;
   width: 100%;

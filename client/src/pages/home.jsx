@@ -15,18 +15,18 @@ function Home() {
       <section id="about" className="section">
         <h2>About Us</h2>
         <p>Information about our company...</p>
+        <button type="button" onClick={() => navigate('/production')}> 
+        Production
+      </button>
+      <button type="button" onClick={() => navigate('/design')}>
+        Design
+      </button>
       </section>
       <section id="contact" className="section">
         <h2>Contact Us</h2>
         <p>Contact details here...</p>
       </section>
       
-      <button type="button" onClick={() => navigate('/production')}> 
-        Production
-      </button>
-      <button type="button" onClick={() => navigate('/design')}>
-        Design
-      </button>
     </div>
   );
 }
