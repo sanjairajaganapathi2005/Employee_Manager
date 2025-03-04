@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "../styles/design.css";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import styles from "../styles/design.module.css";  
 const Design = () => {
   const [designers, setDesigners] = useState([]);
   const [selectedDesigner, setSelectedDesigner] = useState(null);
@@ -9,11 +9,44 @@ const Design = () => {
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
 
+  const API_URL = "http://localhost:5000";
+
+  useEffect(() => {
+    fetchDesigners();
+  }, []);
+
+  useEffect(() => {
+    if (selectedDesigner) {
+      fetchDesigns(selectedDesigner);
+    } else {
+      setRows([]);
+    }
+  }, [selectedDesigner]);
+
+  const fetchDesigners = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/designers`);
+      setDesigners(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchDesigns = async (designerId) => {
+    try {
+      const response = await axios.get(`${API_URL}/api/designs/${designerId}`);
+      console.log("Fetched designs:", response.data);
+      setRows(response.data);
+      setSavedRows(response.data.map(() => true));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...rows];
-    // Ensure the 'count' field is treated as a number
     if (field === "count") {
-      updatedRows[index][field] = Number(value) || 0; // Convert to number or fallback to 0 if NaN
+      updatedRows[index][field] = Number(value) || 0;
     } else {
       updatedRows[index][field] = value;
     }
@@ -31,20 +64,36 @@ const Design = () => {
     });
   };
 
-  const addDesign = () => {
-    setRows([...rows, { date: getCurrentDate(), designColour: "", count: 0 }]);
-    setSavedRows([...savedRows, false]);
+  const addDesign = async () => {
+    const newRow = { date: getCurrentDate(), coloursales: " ", person: "", count: 0 };
+    try {
+      const response = await axios.post(`${API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
+      setRows([...rows, response.data]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const addSales = () => {
-    setRows([...rows, { date: getCurrentDate(), designColour: "sales", count: 0 }]);
-    setSavedRows([...savedRows, false]);
+  const addSales = async () => {
+    const newRow = { date: getCurrentDate(), coloursales: "sales", person: "", count: 0 };
+    try {
+      const response = await axios.post(`${API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
+      setRows([...rows, response.data]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const saveRow = (index) => {
-    const updatedSavedRows = [...savedRows];
-    updatedSavedRows[index] = true;
-    setSavedRows(updatedSavedRows);
+  const saveRow = async (index) => {
+    const row = rows[index];
+    try {
+      await axios.put(`${API_URL}/api/designs/${row._id}`, row);
+      const updatedSavedRows = [...savedRows];
+      updatedSavedRows[index] = true;
+      setSavedRows(updatedSavedRows);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const toggleEdit = (index) => {
@@ -53,76 +102,88 @@ const Design = () => {
     setSavedRows(updatedSavedRows);
   };
 
-  const addDesigner = () => {
+  const addDesigner = async () => {
     if (designerName.trim() !== "") {
-      setDesigners([...designers, { id: designers.length + 1, name: designerName }]);
-      setDesignerName("");
-      setShowInput(false);
+      try {
+        const response = await axios.post(`${API_URL}/api/designers`, { name: designerName });
+        setDesigners([...designers, response.data]);
+        setDesignerName("");
+        setShowInput(false);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
-  const totalDesignCount = rows
-    .filter(row => row.designColour !== "sales")
-    .reduce((total, row) => total + Number(row.count), 0) -
-    rows
-    .filter(row => row.designColour === "sales")
+  const nonSalesCount = rows
+    .filter((row) => row.coloursales !== "sales")
     .reduce((total, row) => total + Number(row.count), 0);
 
-  // Function to calculate the total count for each designColour
+  const salesCount = rows
+    .filter((row) => row.coloursales === "sales")
+    .reduce((total, row) => total + Number(row.count), 0);
+
+  const totalDesignCount = nonSalesCount - salesCount;
+
   const calculateTotalByColour = () => {
     const colourCounts = {};
-
-    rows.forEach(row => {
-      if (row.designColour && row.count > 0) {
-        colourCounts[row.designColour] = (colourCounts[row.designColour] || 0) + row.count;
+    rows.forEach((row) => {
+      if (row.coloursales && row.count > 0) {
+        colourCounts[row.coloursales] = (colourCounts[row.coloursales] || 0) + row.count;
       }
     });
-
     return colourCounts;
   };
 
   const colourTotals = calculateTotalByColour();
 
   return (
-    <div className="container">
-      <div className="sidebar">
-        <h2 className="title">Design List</h2>
-        <div className="design-list">
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
+        <h2 className={styles.title}>Design List</h2>
+        <div className={styles.designList}>
           {designers.map((designer) => (
             <button
-              key={designer.id}
-              className={`design-item ${selectedDesigner === designer.id ? "active" : ""}`}
-              onClick={() => setSelectedDesigner(designer.id)}
+              key={designer._id}
+              className={`${styles.designItem} ${
+                selectedDesigner === designer._id ? styles.active : ""
+              }`}
+              onClick={() => setSelectedDesigner(designer._id)}
             >
               {designer.name}
             </button>
           ))}
         </div>
         {showInput ? (
-          <div className="design-input">
+          <div className={styles.designInput}>
             <input
               type="text"
               placeholder="Enter design name"
               value={designerName}
               onChange={(e) => setDesignerName(e.target.value)}
-              className="input-box"
+              className={styles.inputBox}
             />
-            <button onClick={addDesigner} className="add-button">OK</button>
+            <button onClick={addDesigner} className={styles.addButton}>
+              OK
+            </button>
           </div>
         ) : (
-          <button onClick={() => setShowInput(true)} className="add-button">+ Add Design</button>
+          <button onClick={() => setShowInput(true)} className={styles.addButton}>
+            + Add Design
+          </button>
         )}
       </div>
 
-      <div className="content">
+      <div className={styles.content}>
         {selectedDesigner ? (
           <>
-            <h3 className="design-header">Design Details</h3>
-            <table className="table">
+            <h3 className={styles.designHeader}>Design Details</h3>
+            <table className={styles.table}>
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Design Colour</th>
+                  <th>Production/Sales</th>
+                  <th>Person</th>
                   <th>Count</th>
                   <th>Actions</th>
                 </tr>
@@ -134,17 +195,28 @@ const Design = () => {
                     <td>
                       <input
                         type="text"
-                        value={row.designColour}
-                        className="input-box"
+                        value={row.coloursales}
+                        className={styles.inputBox}
+                        placeholder="Enter colour name"
                         disabled={savedRows[index]}
-                        onChange={(e) => handleInputChange(index, "designColour", e.target.value)}
+                        onChange={(e) => handleInputChange(index, "coloursales", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={row.person}
+                        placeholder="Enter designer name"
+                        className={styles.inputBox}
+                        disabled={savedRows[index]}
+                        onChange={(e) => handleInputChange(index, "person", e.target.value)}
                       />
                     </td>
                     <td>
                       <input
                         type="number"
                         value={row.count || ""}
-                        className="input-box"
+                        className={styles.inputBox}
                         disabled={savedRows[index]}
                         onChange={(e) => handleInputChange(index, "count", e.target.value)}
                         step="1"
@@ -154,36 +226,53 @@ const Design = () => {
                     </td>
                     <td>
                       {!savedRows[index] ? (
-                        <button className="save-button" onClick={() => saveRow(index)}>Save</button>
+                        <button className={styles.saveButton} onClick={() => saveRow(index)}>
+                          Save
+                        </button>
                       ) : (
-                        <button className="edit-button" onClick={() => toggleEdit(index)}>Edit</button>
+                        <button className={styles.editButton} onClick={() => toggleEdit(index)}>
+                          Edit
+                        </button>
                       )}
                     </td>
                   </tr>
                 ))}
-                <tr className="total-row">
-                  <td colSpan="2"><h3>Total count Split up:</h3></td>
-                  <td colSpan="2"><h4>
-                    {Object.keys(colourTotals).map((colour) => (
-                      <div key={colour}>{colour}: {colourTotals[colour]}</div>
-                    ))}</h4>
+                <tr className={styles.totalRow}>
+                  <td colSpan="3">
+                    <h3>Total count Split up:</h3>
+                  </td>
+                  <td colSpan="3">
+                    <h4>
+                      {Object.keys(colourTotals).map((colour) => (
+                        <div key={colour}>
+                          {colour}: {colourTotals[colour]}
+                        </div>
+                      ))}
+                    </h4>
                   </td>
                 </tr>
-                {/* Display total count overall */}
-                <tr className="total-row">
-                  <td colSpan="2"><h3>Total count:</h3></td>
-                  <td><h3>{totalDesignCount}</h3></td>
+                <tr className={styles.totalRow}>
+                  <td colSpan="3">
+                    <h3>Total count:</h3>
+                  </td>
+                  <td>
+                    <h3>{totalDesignCount}</h3>
+                  </td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
-            <div className="buttons">
-              <button className="add-design" onClick={addDesign}>+ Add Design</button>
-              <button className="add-sales" onClick={addSales}>+ Add Sales</button>
+            <div className={styles.buttons}>
+              <button className={styles.addDesign} onClick={addDesign}>
+                + Add Design
+              </button>
+              <button className={styles.addSales} onClick={addSales}>
+                + Add Sales
+              </button>
             </div>
           </>
         ) : (
-          <h3 className="select-message">Select a design to view details</h3>
+          <h3 className={styles.selectMessage}>Select a design to view details</h3>
         )}
       </div>
     </div>
