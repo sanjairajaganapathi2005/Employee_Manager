@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from '../styles/production.module.css';  
+import { useNavigate } from 'react-router-dom';
 
 const Production = () => {
+  const navigate=useNavigate();
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [showInput, setShowInput] = useState(false);
@@ -11,7 +13,7 @@ const Production = () => {
   const [savedRows, setSavedRows] = useState([]);
   const [showLast5, setShowLast5] = useState(false);
 
-  const API_URL = "http://localhost:5000";
+  const VITE_API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchEmployees();
@@ -25,7 +27,7 @@ const Production = () => {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/employees`);
+      const response = await axios.get(`${VITE_API_URL}/api/employees`);
       setEmployees(response.data);
     } catch (err) {
       console.error(err);
@@ -34,7 +36,7 @@ const Production = () => {
 
   const fetchProductions = async (employeeId) => {
     try {
-      const response = await axios.get(`${API_URL}/api/productions/${employeeId}`);
+      const response = await axios.get(`${VITE_API_URL}/api/productions/${employeeId}`);
       setRows(response.data);
       setSavedRows(response.data.map(() => true));
     } catch (err) {
@@ -88,9 +90,9 @@ const Production = () => {
     const row = rows[index];
     try {
       if (row._id) {
-        await axios.put(`${API_URL}/api/productions/${row._id}`, row);
+        await axios.put(`${VITE_API_URL}/api/productions/${row._id}`, row);
       } else {
-        const response = await axios.post(`${API_URL}/api/productions`, { ...row, employeeId: selectedEmployee });
+        const response = await axios.post(`${VITE_API_URL}/api/productions`, { ...row, employeeId: selectedEmployee });
         const updatedRows = [...rows];
         updatedRows[index] = response.data;
         setRows(updatedRows);
@@ -114,7 +116,7 @@ const Production = () => {
   const addEmployee = async () => {
     if (employeeName.trim() !== "") {
       try {
-        const response = await axios.post(`${API_URL}/api/employees`, { name: employeeName });
+        const response = await axios.post(`${VITE_API_URL}/api/employees`, { name: employeeName });
         setEmployees([...employees, response.data]);
         setEmployeeName("");
         setShowInput(false);
@@ -123,6 +125,11 @@ const Production = () => {
       }
     }
   };
+  const handlelogout=()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('loginTime');
+    navigate('/');
+  }
 
   return (
     <div className={styles.container}>
@@ -160,12 +167,14 @@ const Production = () => {
       </div>
 
       <div className={styles.content}>
+      <button  className={styles.logoutButton} onClick={handlelogout}>Logout</button>
         {selectedEmployee ? (
           <>
-            <h3 className={styles.employeeHeader}>Production Details</h3>
-
+          <div className={styles.employeeHeader}>
+            <h1>Employee Details</h1>
+          </div>
             <table className={styles.table}>
-              <thead>
+              <thead styles={styles.thead}>
                 <tr>
                   <th>Date & Time</th>
                   <th>Description</th>
@@ -257,7 +266,7 @@ const Production = () => {
             </div>
           </>
         ) : (
-          <h3 className={styles.selectMessage}>Select an employee to view details</h3>
+          <h1 className={styles.selectMessage}>Select an employee to view details</h1>
         )}
       </div>
     </div>

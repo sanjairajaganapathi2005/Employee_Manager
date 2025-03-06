@@ -6,18 +6,27 @@ const Employee = require('./models/Employee');
 const Production = require('./models/Production');
 const Designer = require('./models/Designer');
 const Design = require('./models/Design');
+const User = require('./models/User');
+const bcrypt = require('bcryptjs');  
+const validator = require('validator');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+require('dotenv').config();
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/productionApp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+app.use(express.json());
+
+app.use(cors());
+const mongoUri = `${process.env.MONGO_URL}/${process.env.DB_NAME}`;
+
+mongoose.connect(mongoUri)
+.then(() => {
+  console.log(`Connected to MongoDB database: ${process.env.DB_NAME}`);
+})
+.catch((err) => {
+  console.error('Error connecting to MongoDB:', err);
 });
 
 // Routes
@@ -30,6 +39,7 @@ app.get('/api/employees', async (req, res) => {
   }
 });
 
+// Add a new employee
 app.post('/api/employees', async (req, res) => {
   const employee = new Employee({
     name: req.body.name,
@@ -43,6 +53,7 @@ app.post('/api/employees', async (req, res) => {
   }
 });
 
+// Get all productions by employee ID
 app.get('/api/productions/:employeeId', async (req, res) => {
   try {
     const productions = await Production.find({ employeeId: req.params.employeeId });
@@ -52,24 +63,38 @@ app.get('/api/productions/:employeeId', async (req, res) => {
   }
 });
 
+// Add a new production
 app.post('/api/productions', async (req, res) => {
-  const production = new Production({
-    employeeId: req.body.employeeId,
-    timestamp: req.body.timestamp,
-    description: req.body.description,
-    count: req.body.count,
-    amount: req.body.amount,
-    total: req.body.total,
-  });
+  const { employeeId, timestamp, description, count, amount, total } = req.body;
 
   try {
+    // Fetch employee details to get the employee's name
+    const employee = await Employee.findById(employeeId);
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    // Create a new production record with the employee's name
+    const production = new Production({
+      employeeId,
+      EmpName: employee.name, 
+      timestamp,
+      description,
+      count,
+      amount,
+      total,
+    });
+
     const newProduction = await production.save();
     res.status(201).json(newProduction);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ message: err.message });
   }
 });
 
+
+// Update a production
 app.put('/api/productions/:id', async (req, res) => {
   try {
     const production = await Production.findById(req.params.id);
@@ -117,6 +142,7 @@ app.post("/api/designers", async (req, res) => {
     }
   });
   
+
   // Add a new design
   app.post("/api/designs", async (req, res) => {
     const { designerId, date, coloursales, person, count } = req.body; 
@@ -138,8 +164,6 @@ app.post("/api/designers", async (req, res) => {
       res.status(400).json({ message: err.message });
     }
   });
-  
-
   
   // Get designs by designer ID
   app.get("/api/designs/:designerId", async (req, res) => {
@@ -172,6 +196,93 @@ app.post("/api/designers", async (req, res) => {
   });
 
 
+
+
+  function handleError(res, statusCode, message) {
+    return res.status(statusCode).json({ error: message });
+  }
+
+  //login
+  app.post('/api/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      if (!email || !password) { 
+        return res.status(400).send('Email and password are required');
+      }
+  
+      const user = await User.findOne({
+          email: email,
+        });
+  
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+  
+      if (!isMatch) {
+        return res.status(404).send("Invalid credentials");
+      }
+  
+      const token = jwt.sign(
+        { email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '12hr' }
+      );
+  
+      return res.status(200).send({ message: "Login successful", token: token });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send("Internal Server Error");
+    }
+  });
+  
+
+  
+
+
+//register
+  app.post('/api/register', async (req, res) => {
+    const { email, password, confirmPassword } = req.body;
+   
+    if (!email || !password || !confirmPassword) {
+      return handleError(res, 400, 'Please provide email, password, and confirm password.');
+    }
+  
+    if (password !== confirmPassword) {
+      return handleError(res, 400, 'Passwords do not match');
+    }
+  
+    const passwordStrengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`~]).{8,}$/;
+    if (!passwordStrengthRegex.test(password)) {
+      return handleError(res, 400, 'Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.');
+    }
+
+    if (!validator.isEmail(email)) {
+      return handleError(res, 400, 'Invalid email format');
+    }
+  
+    try {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return handleError(res, 400, 'User already exists');
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = new User({ email, password: hashedPassword });
+      await user.save();
+  
+      res.status(201).json({ message: 'User registered successfully', success: true });
+    } catch (error) {
+      console.error('Error during user registration:', error);
+      handleError(res, 500, 'Error registering user, please try again later.');
+    }
+  });
+  
+
+
+
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('Server is running ');
 });

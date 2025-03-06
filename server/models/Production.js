@@ -6,6 +6,11 @@ const ProductionSchema = new mongoose.Schema({
     ref: 'Employee',
     required: true,
   },
+  EmpName: {
+    type: String,
+    ref: 'Employee',
+    required: true,
+  },
   timestamp: {
     type: String,
     required: true,

@@ -2,40 +2,54 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// Password strength regex
+const passwordStrengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`~]).{8,}$/;
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
-
-function Login() {
+function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  // API URL from environment variable
+  const VITE_API_URL = import.meta.env.VITE_API_URL; 
 
-    try {
-      const response = await axios.post(`${VITE_API_URL}/api/login`, {
-        email,
-        password,
-      });
 
-      if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('loginTime', Date.now()); 
 
-        setMessage('Login successful');
-        navigate('/dashboard'); 
-      }
-    } catch (error) {
-      setMessage(error.response?.data?.message || 'Login failed. Please try again.');
+const handleRegister = async (event) => {
+  event.preventDefault();
+
+  try {
+    const response = await axios.post(`${VITE_API_URL}/api/register`, {
+      email: email, 
+      password: password, 
+      confirmPassword: confirmPassword, 
+    });
+
+    if (response.data.success) {
+      console.log('User registered successfully:', response.data.message);
+      navigate('/login');
     }
-  };
+
+  } catch (error) {
+    if (error.response) {
+      console.error('Server Error:', error.response.data.message);
+      alert(error.response.data.message);
+    } else if (error.request) {
+      console.error('Network Error: No response received');
+      alert('Network Error: Unable to reach the server. Please try again later.');
+    } else {
+      console.error('Unexpected Error:', error.message);
+      alert('Unexpected error occurred. Please try again later.');
+    }
+  }
+};
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleLogin} style={styles.form}>
-        <h1 style={styles.title}>Login</h1>
+      <form onSubmit={handleRegister} style={styles.form}>
+        <h1 style={styles.title}>Register</h1>
         <input
           type="email"
           placeholder="Email"
@@ -52,7 +66,15 @@ function Login() {
           required
           style={styles.input}
         />
-        <button type="submit" style={styles.button}>Login</button>
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          style={styles.input}
+        />
+        <button type="submit" style={styles.button}>Register</button>
         {message && <p style={styles.message}>{message}</p>}
       </form>
     </div>
@@ -79,7 +101,7 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
     width: "300px",
-    height: "250px",
+    height: "350px", 
   },
   input: {
     padding: "10px",
@@ -105,5 +127,4 @@ const styles = {
   },
 };
 
-export default Login;
-
+export default Register;

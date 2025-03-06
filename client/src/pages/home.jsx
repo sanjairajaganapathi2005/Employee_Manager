@@ -19,12 +19,6 @@ function Home() {
       <section id="about" className="section">
         <h2>About Us</h2>
         <p>We are R C TEX, a leading textile exporter over south India. With over 20 years of experience in the textile industry, we specialize in high-quality textiles exported worldwide. Our commitment to excellence and sustainable practices sets us apart in the market.</p>
-        <button type="button" onClick={() => navigate('/production')}>
-          Production
-        </button>
-        <button type="button" onClick={() => navigate('/design')}>
-          Design
-        </button>
       </section>
 
       {/* Contact Us Section */}

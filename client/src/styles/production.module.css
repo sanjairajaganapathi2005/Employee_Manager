@@ -7,7 +7,11 @@
   overflow: hidden;
 }
 
-/* Sidebar Styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .sidebar {
   width: 280px;
   background-color: #364c63;
@@ -69,7 +73,7 @@
 }
 
 .inputBox:focus {
-  border-color: #1a51e8;
+  border-color: #264088;
 }
 
 .addButton {
@@ -98,16 +102,21 @@
 }
 
 .employeeHeader {
-  font-size: 30px;
-  font-weight: 600;
-  margin-bottom: 25px;
-  color: #1a73e8;
+  position: fixed; 
+  position: sticky;
+  top: -5%;
+  left: 0%; 
+  width: 100%; 
+  background: #fff; 
+  z-index: 10; 
+  padding: 15px;
 }
 
 .table {
   width: 100%;
-  border-collapse: separate;
   border-spacing: 0 10px;
+  max-height: 80%;
+  margin-top: 2%;
 }
 
 .table th,
@@ -119,11 +128,16 @@
 }
 
 .table th {
-  background: #1a73e8;
+  background: #364c63;
   color: white;
   position: sticky;
-  top: 0;
+  top: 10%; /* Make the header sticky after 10% from the top */
   z-index: 1;
+}
+
+.table tr {
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .saveButton,
@@ -138,12 +152,12 @@
 }
 
 .saveButton {
-  background: #1a73e8;
+  background: #364c63;
   color: white;
 }
 
 .save-button:hover {
-  background: #1557b7;
+  background: #1c4077;
 }
 
 .editButton {
@@ -162,7 +176,7 @@
 
 .totalRow h3 {
   margin: 0;
-  color: #1a73e8;
+  color: #364c63;
 }
 
 .buttons {
@@ -171,9 +185,32 @@
   margin-top: 30px;
 }
 
+.logoutButton {
+  position: fixed; 
+  top: 5vh; 
+  right: 5vw; 
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 50; 
+}
+
+@media (max-width: 600px) {
+  .logoutButton {
+    top: 15px; 
+    right: 15px; 
+    padding: 8px 16px;
+  }
+}
+
 .addProduction,
 .addSalary {
-  background: #1a73e8;
+  background: #364c63;
   color: white;
   padding: 12px 24px;
   cursor: pointer;
@@ -186,11 +223,11 @@
 
 .addProduction:hover,
 .addSalary:hover {
-  background: #1557b7;
+  background: #184b97;
 }
 
 .toggleButton {
-  background: #1a73e8;
+  background: #364c63;
   color: white;
   padding: 12px 24px;
   cursor: pointer;
@@ -203,6 +240,6 @@
 }
 
 .toggleButton:hover {
-  background: #1557b7;
+  background: #164892;
 }
 

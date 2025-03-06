@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../styles/design.module.css";  
+import styles from "../styles/design.module.css"; 
+import { useNavigate } from 'react-router-dom';
 const Design = () => {
+  const navigate = useNavigate();
   const [designers, setDesigners] = useState([]);
   const [selectedDesigner, setSelectedDesigner] = useState(null);
   const [showInput, setShowInput] = useState(false);
@@ -9,7 +11,7 @@ const Design = () => {
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
 
-  const API_URL = "http://localhost:5000";
+  const VITE_API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchDesigners();
@@ -25,7 +27,7 @@ const Design = () => {
 
   const fetchDesigners = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/designers`);
+      const response = await axios.get(`${VITE_API_URL}/api/designers`);
       setDesigners(response.data);
     } catch (err) {
       console.error(err);
@@ -34,7 +36,7 @@ const Design = () => {
 
   const fetchDesigns = async (designerId) => {
     try {
-      const response = await axios.get(`${API_URL}/api/designs/${designerId}`);
+      const response = await axios.get(`${VITE_API_URL}/api/designs/${designerId}`);
       console.log("Fetched designs:", response.data);
       setRows(response.data);
       setSavedRows(response.data.map(() => true));
@@ -67,7 +69,7 @@ const Design = () => {
   const addDesign = async () => {
     const newRow = { date: getCurrentDate(), coloursales: " ", person: "", count: 0 };
     try {
-      const response = await axios.post(`${API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
+      const response = await axios.post(`${VITE_API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
       setRows([...rows, response.data]);
     } catch (err) {
       console.error(err);
@@ -77,7 +79,7 @@ const Design = () => {
   const addSales = async () => {
     const newRow = { date: getCurrentDate(), coloursales: "sales", person: "", count: 0 };
     try {
-      const response = await axios.post(`${API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
+      const response = await axios.post(`${VITE_API_URL}/api/designs`, { ...newRow, designerId: selectedDesigner });
       setRows([...rows, response.data]);
     } catch (err) {
       console.error(err);
@@ -87,7 +89,7 @@ const Design = () => {
   const saveRow = async (index) => {
     const row = rows[index];
     try {
-      await axios.put(`${API_URL}/api/designs/${row._id}`, row);
+      await axios.put(`${VITE_API_URL}/api/designs/${row._id}`, row);
       const updatedSavedRows = [...savedRows];
       updatedSavedRows[index] = true;
       setSavedRows(updatedSavedRows);
@@ -105,7 +107,7 @@ const Design = () => {
   const addDesigner = async () => {
     if (designerName.trim() !== "") {
       try {
-        const response = await axios.post(`${API_URL}/api/designers`, { name: designerName });
+        const response = await axios.post(`${VITE_API_URL}/api/designers`, { name: designerName });
         setDesigners([...designers, response.data]);
         setDesignerName("");
         setShowInput(false);
@@ -114,6 +116,11 @@ const Design = () => {
       }
     }
   };
+  const handlelogout=()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('loginTime');
+    navigate('/');
+  }
 
   const nonSalesCount = rows
     .filter((row) => row.coloursales !== "sales")
@@ -175,9 +182,12 @@ const Design = () => {
       </div>
 
       <div className={styles.content}>
+      <button  className={styles.logoutButton} onClick={handlelogout}>Logout</button>
         {selectedDesigner ? (
           <>
-            <h3 className={styles.designHeader}>Design Details</h3>
+          <div className={styles.designHeader}>
+            <h1>Design Details</h1>
+          </div>
             <table className={styles.table}>
               <thead>
                 <tr>

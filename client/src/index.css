@@ -73,4 +73,28 @@ body {
     margin-top: 50px;
   }
   
-  
+  /* global.css */
+
+/* Global Logout Button Style */
+.logoutButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #ff4d4d; /* Red color for the logout button */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1000; /* Ensure the button is on top of other content */
+}
+
+.logoutButton:hover {
+  background-color: #e60000; /* Darker red when hovered */
+}
+
+.logoutButton:focus {
+  outline: none;
+}
