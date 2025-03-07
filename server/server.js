@@ -24,9 +24,11 @@ const mongoUri = `${process.env.MONGO_URL}/${process.env.DB_NAME}`;
 mongoose.connect(mongoUri)
 .then(() => {
   console.log(`Connected to MongoDB database: ${process.env.DB_NAME}`);
+  console.log("The assigned port is:", process.env.PORT);
 })
 .catch((err) => {
   console.error('Error connecting to MongoDB:', err);
+  console.log("The assigned port is:", process.env.PORT);
 });
 
 // Routes
