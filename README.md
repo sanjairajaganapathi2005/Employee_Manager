@@ -27,16 +27,14 @@ RC Tex is a web-based management system designed for textile industry operations
 - Displays **company overview**, **production process**, **about us**, and **contact information**.
 - Includes a secure **admin login** option for accessing internal tools.
 
-### 🧵 Production Details
+### 📊 Admin Dashboard
+- Centralized area for navigating between Employee Production, and Production Design Management modules.
+#### 🧵 Production Details
 - Admin can **record, track, and view** production data.
 - Manage **product types**, view **production counts**, and monitor outputs over time.
 
-### 👨‍🏭 Employee Details
+#### 👨‍🏭 Employee Details
 - Add and manage **employee information**.
 - Track **individual production contributions**.
 - Automatically calculate **salary/payments** based on contributions or work logs.
-
-### 📊 Admin Dashboard
-- Centralized area for navigating between Employee, Production, and Production Management modules.
-
 
