@@ -192,7 +192,7 @@ const Design = () => {
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Production/Sales</th>
+                  <th>Design discription</th>
                   <th>Person</th>
                   <th>Count</th>
                   <th>Actions</th>
