@@ -1,0 +1,208 @@
+/* About Section CSS */
+.about-section {
+  background: #ffffff;
+  padding: 20px;
+  margin : 50px 20px 20px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.section-header {
+  text-align: center;
+}
+
+.gradientheading {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #6a11cb; /* Fallback */
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+.gradientheading::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  border-radius: 3px;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 1.2rem;
+  margin:20px auto 50px  ;
+}
+
+/* Rows Layout */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.small-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.large-cards-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+/* Card Styles */
+.about-card {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0px;
+}
+
+.about-card h3 {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.about-card p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.card-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-stats span {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Main Cards */
+.main-card {
+  background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+  color: white;
+}
+
+.main-card h3 {
+  color: white;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.main-card h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #3498db;
+}
+
+.main-card p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+}
+
+.signature {
+  margin-top: 30px;
+  font-style: italic;
+}
+
+.signature p:first-child {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.signature p:last-child {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+/* Mission Features */
+.mission-features {
+  margin-top: 25px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.feature-icon {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .small-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .large-cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .small-cards-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-card, .main-card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 2.2rem;
+  }
+  
+  .card-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

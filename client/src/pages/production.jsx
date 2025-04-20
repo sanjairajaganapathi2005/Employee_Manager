@@ -75,13 +75,13 @@ const Production = () => {
   };
 
   const addProduction = () => {
-    const newRow = { timestamp: getCurrentDateTime(), description: "", count: 0, amount: 0, total: 0 };
+    const newRow = { timestamp: getCurrentDateTime(), design:"", description: "", count: 0, amount: 0, total: 0 };
     setRows([...rows, newRow]);
     setSavedRows([...savedRows, false]);
   };
 
   const addSalary = () => {
-    const newRow = { timestamp: getCurrentDateTime(), description: "salary", count: 0, amount: 0, total: 0 };
+    const newRow = { timestamp: getCurrentDateTime(), design:"-",description: "salary", count: 0, amount: 0, total: 0 };
     setRows([...rows, newRow]);
     setSavedRows([...savedRows, false]);
   };
@@ -177,7 +177,8 @@ const Production = () => {
               <thead styles={styles.thead}>
                 <tr>
                   <th>Date & Time</th>
-                  <th>Description</th>
+                  <th>Design</th>
+                  <th>Discription</th>
                   <th>Count</th>
                   <th>Amount</th>
                   <th>Total</th>
@@ -188,6 +189,15 @@ const Production = () => {
                 {rows.slice(-(showLast5 ? 5 : 15)).map((row, index) => (
                   <tr key={index}>
                     <td>{row.timestamp}</td>
+                    <td>
+                      <input
+                        type="text"
+                        value={row.design}
+                        className={styles.inputBox}
+                        disabled={savedRows[index]}
+                        onChange={(e) => handleInputChange(index, "design", e.target.value)}
+                      />
+                    </td>
                     <td>
                       <input
                         type="text"

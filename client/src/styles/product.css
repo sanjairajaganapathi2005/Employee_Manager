@@ -1,0 +1,132 @@
+/* product.css */
+.product-section {
+  background: #ffffff;
+  padding: 0px 40px 40px 40px;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pgradient {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #6a11cb; /* Fallback */
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+.pgradient::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  border-radius: 3px;
+}
+
+.product-desc {
+  text-align: center;
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.product-slideshow {
+  overflow: hidden;
+  position: relative;
+  margin: 40px auto 0;
+  max-width: 100%;
+}
+
+.slide-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+  gap: 30px;
+  padding: 10px 0;
+}
+
+.slide-track img {
+  width: 320px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.slide-track img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .product-section {
+    padding: 10px 20px;
+    margin: 30px 20px;
+  }
+  
+  .slide-track img {
+    width: 280px;
+    height: 180px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gradient-heading {
+    font-size: 2rem;
+  }
+  
+  .product-desc {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  
+  .slide-track {
+    gap: 20px;
+    animation-duration: 25s;
+  }
+  
+  .slide-track img {
+    width: 240px;
+    height: 160px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .product-section {
+    padding: 10px 15px;
+    margin: 20px 10px;
+    border-radius: 15px;
+  }
+  
+  .gradient-heading {
+    font-size: 1.8rem;
+  }
+  
+  .slide-track {
+    gap: 15px;
+    animation-duration: 20s;
+  }
+  
+  .slide-track img {
+    width: 200px;
+    height: 140px;
+    border-radius: 8px;
+  }
+}

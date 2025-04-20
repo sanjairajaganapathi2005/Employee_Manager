@@ -15,6 +15,10 @@ const ProductionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  design: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
