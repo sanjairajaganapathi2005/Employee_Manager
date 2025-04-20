@@ -16,30 +16,30 @@ function About() {
             <div className="about-card">
               <div className="card-icon">🏭</div>
               <h3>Our Facility</h3>
-              <p>50,000 sqft manufacturing plant with cutting-edge technology in Namakkal, Tamil Nadu</p>
+              <p>50+ manufacturing powerloom with cutting-edge technology in Vennandur, Tamil Nadu</p>
               <div className="card-stats">
-                <span>5 Production Lines</span>
-                <span>200+ Employees</span>
+                <span>50+ Design</span>
+                <span>50+ Employees</span>
               </div>
             </div>
 
             <div className="about-card">
               <div className="card-icon">🌎</div>
               <h3>Global Presence</h3>
-              <p>Exporting premium textiles to 15+ countries across Europe, North America, and Asia</p>
+              <p>Exporting premium textiles across all over South India</p>
               <div className="card-stats">
                 <span>50+ Clients</span>
-                <span>5 Continents</span>
+                <span>5 states</span>
               </div>
             </div>
 
             <div className="about-card">
               <div className="card-icon">👔</div>
               <h3>Experience</h3>
-              <p>20+ years in textile manufacturing and exports with consistent quality and innovation</p>
+              <p>25+ years in textile manufacturing and exports with consistent quality and innovation</p>
               <div className="card-stats">
                 <span>100+ Projects</span>
-                <span>5 Generations</span>
+                <span>4 Generations</span>
                 <span>10+ Awards</span>
               </div>
             </div>
@@ -55,7 +55,7 @@ function About() {
                 heritage combined with modern manufacturing excellence.
               </p>
               <div className="signature">
-                <p>Ramasamy Chettiar</p>
+                <p>Ramasamy</p>
                 <p>Founder & Managing Director</p>
               </div>
             </div>
