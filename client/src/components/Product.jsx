@@ -4,7 +4,7 @@ import "../styles/product.css";
 function Product() {
   return (
     <section id="products" className="product-section">
-      <h2 className="gradient-heading">Our Products</h2>
+      <h2 className="pgradient">Our Products</h2>
       <p className="product-desc">
         We specialize in a wide range of textile products including cotton fabrics, blends, yarn-dyed textiles,
         and specialty materials used in fashion and furnishings. Our materials are tested for durability, breathability,

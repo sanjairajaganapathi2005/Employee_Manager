@@ -10,7 +10,7 @@
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0px;
 }
 
 .section-header {
@@ -70,7 +70,7 @@
 .about-card {
   background: white;
   border-radius: 8px;
-  padding: 30px;
+  padding: 10px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   border: 1px solid #eee;
@@ -83,13 +83,13 @@
 
 .card-icon {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .about-card h3 {
   color: #2c3e50;
   font-size: 1.4rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .about-card p {
@@ -192,7 +192,7 @@
   }
   
   .about-card, .main-card {
-    padding: 25px;
+    padding: 15px;
   }
 }
 

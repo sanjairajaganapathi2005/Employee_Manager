@@ -4,7 +4,7 @@ import "../styles/manufacture.css";
 function Manufacture() {
   return (
     <section id="manufacture" className="manufact-section">
-      <h2 className="gradient-heading">Our Manufacturing</h2>
+      <h2 className="mgradient">Our Manufacturing</h2>
       <p className="manufact-desc">
         Our facilities are equipped with cutting-edge weaving machines, dyeing units, and precision finishing systems.
         We follow a lean manufacturing process with strict quality checks to meet global benchmarks.
