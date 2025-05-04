@@ -1,34 +1,39 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
+const express = require("express");
+const nodemailer = require("nodemailer");
+
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-  const { name, email, message } = req.body;
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
 
-  try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // use STARTTLS
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+// Contact route
+router.post("/", (req, res) => {
+  const { name, email, phone, message } = req.body;
 
-    const mailOptions = {
-      from: email,
-      to: process.env.EMAIL_USER,
-      subject: `New Contact Form Message from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
-    };
+  const mailOptions = {
+    from: process.env.EMAIL,        // Always use your Gmail here
+    to: process.env.EMAIL,          // Receive the message yourself
+    replyTo: email,                 // User's email for replying
+    subject: `New Contact Form Submission from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage: ${message}`,
+  };
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: '✅ Message sent successfully!' });
-  } catch (error) {
-    console.error('❌ Email send error:', error);
-    res.status(500).json({ error: 'Something went wrong. Please try again.' });
-  }
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).json({
+        code: 500,
+        message: "Failed to send email",
+        error: error.toString(),
+      });
+    }
+    res.status(200).json({ code: 200, message: "Message sent successfully" });
+  });
 });
 
 module.exports = router;
