@@ -43,8 +43,8 @@ function Contact() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.174238226501!2d78.0905929!3d11.5147576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babe636fe3610c1%3A0xc578cf945121f2ed!2sRC%20TEX!5e1!3m2!1sen!2sin!4v1714900000000!5m2!1sen!2sin"
               width="100%"
               height="100%"
-              style={{ border: 0 }}
               allowFullScreen=""
+
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
