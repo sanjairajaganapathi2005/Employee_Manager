@@ -12,12 +12,14 @@ function Product() {
       </p>
       <div className="product-slideshow">
         <div className="slide-track">
-          <img src="/img1.jpg" alt="Premium Cotton Fabric" />
-          <img src="/img1.jpg" alt="Cotton-Polyester Blend" />
-          <img src="/img1.jpg" alt="Yarn-Dyed Textile" />
-          <img src="/img1.jpg" alt="Specialty Material" />
-          <img src="/img1.jpg" alt="Apparel Fabric" />
-          <img src="/img1.jpg" alt="Home Textile" />
+          <img src="/img1.jpeg" alt="Premium Cotton Fabric" />
+          <img src="/img2.jpeg" alt="Cotton-Polyester Blend" />
+          <img src="/img3.jpeg" alt="Yarn-Dyed Textile" />
+          <img src="/img4.jpeg" alt="Specialty Material" />
+          <img src="/img5.jpeg" alt="Apparel Fabric" />
+          <img src="/img6.jpeg" alt="Home Textile" />
+          <img src="/img7.jpeg" alt="Home Textile" />
+
         </div>
       </div>
     </section>

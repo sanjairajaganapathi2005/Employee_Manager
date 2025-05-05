@@ -11,12 +11,13 @@ function Manufacture() {
       </p>
       <div className="manufacture-slideshow">
         <div className="slide-track">
-          <img src="/img1.jpg" alt="nulll to boni" />
-          <img src="/img1.jpg" alt="boni to tar " />
-          <img src="/img1.jpg" alt="cone to tar" />
-          <img src="/img1.jpg" alt="tar to loam" />
-          <img src="/img1.jpg" alt="tar and loam" />
-          <img src="/img1.jpg" alt="cutting and fold" />
+          <img src="/img8.jpeg" alt="nulll to boni" />
+          <img src="/img9.jpeg" alt="nulll to boni" />
+          <img src="/img10.jpeg" alt="boni to tar " />
+          <img src="/img11.jpeg" alt="cone to tar" />
+          <img src="/img12.jpeg" alt="tar to loam" />
+          <img src="/img13.jpeg" alt="tar and loam" />
+          <img src="/img14.jpeg" alt="cutting and fold" />
         </div>
       </div>
     </section>
