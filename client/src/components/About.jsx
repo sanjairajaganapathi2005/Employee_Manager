@@ -18,7 +18,7 @@ function About() {
               <h3>Our Facility</h3>
               <p>50+ manufacturing powerloom with cutting-edge technology in Vennandur, Tamil Nadu</p>
               <div className="card-stats">
-                <span>50+ Design</span>
+                <span>30+ Design</span>
                 <span>50+ Employees</span>
               </div>
             </div>
@@ -36,11 +36,11 @@ function About() {
             <div className="about-card">
               <div className="card-icon">👔</div>
               <h3>Experience</h3>
-              <p>25+ years in textile manufacturing and exports with consistent quality and innovation</p>
+              <p>35+ years in textile manufacturing and exports with consistent quality and innovation</p>
               <div className="card-stats">
                 <span>100+ Projects</span>
                 <span>4 Generations</span>
-                <span>10+ Awards</span>
+                <span>7+ Awards</span>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@ function About() {
             <div className="about-card main-card">
               <h3>Our Heritage</h3>
               <p>
-                Founded in 2003 by Mr. Ramasamy, R C TEX began as a small weaving unit and has grown into 
+                Founded in 1995 by Mr. Ramasamy, R C TEX began as a small weaving unit and has grown into 
                 a vertically integrated textile exporter. Our journey reflects Tamil Nadu's rich textile 
                 heritage combined with modern manufacturing excellence.
               </p>

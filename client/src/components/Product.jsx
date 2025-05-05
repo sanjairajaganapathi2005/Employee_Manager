@@ -6,10 +6,9 @@ function Product() {
     <section id="products" className="product-section">
       <h2 className="pgradient">Our Products</h2>
       <p className="product-desc">
-        We specialize in a wide range of textile products including cotton fabrics, blends, yarn-dyed textiles,
-        and specialty materials used in fashion and furnishings. Our materials are tested for durability, breathability,
-        and colorfastness, ensuring satisfaction at every step.
+        We specialize in producing high-quality cotton towels and cloths, available in a variety of colors and designs. Our products are crafted for everyday use and tested for softness, durability, and long-lasting color to ensure comfort and satisfaction.
       </p>
+
       <div className="product-slideshow">
         <div className="slide-track">
           <img src="/img1.jpeg" alt="Premium Cotton Fabric" />

@@ -6,8 +6,7 @@ function Manufacture() {
     <section id="manufacture" className="manufact-section">
       <h2 className="mgradient">Our Manufacturing</h2>
       <p className="manufact-desc">
-        Our facilities are equipped with cutting-edge weaving machines, dyeing units, and precision finishing systems.
-        We follow a lean manufacturing process with strict quality checks to meet global benchmarks.
+        We specialize in producing high-quality cotton towels and cloths, available in a variety of colors and designs for everyday use. Our facilities are equipped with cutting-edge weaving machines, advanced dyeing units, and precision finishing systems. We follow a lean manufacturing process with strict quality checks to ensure we meet global quality standards.
       </p>
       <div className="manufacture-slideshow">
         <div className="slide-track">
