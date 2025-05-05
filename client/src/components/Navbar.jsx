@@ -24,8 +24,8 @@ function Navbar() {
         </button>
 
         <div className={`navlinks ${isMenuOpen ? 'active' : ''}`}>
-          <a href="#production" onClick={() => setIsMenuOpen(false)}>Production</a>
           <a href="#about" onClick={() => setIsMenuOpen(false)}>About Us</a>
+          <a href="#product" onClick={() => setIsMenuOpen(false)}>Products</a>
           <a href="#manufacture" onClick={() => setIsMenuOpen(false)}>Manufacture</a>
           <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
           <a href="/login" onClick={() => setIsMenuOpen(false)} className="login-btn">Admin Login</a>
