@@ -1,0 +1,197 @@
+.weeklyReportContainer {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 5rem auto;
+    width:90%;
+    height: auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reportHeader {
+    margin-bottom: 2rem;
+  }
+  
+  .reportHeader h2 {
+    color: #2c3e50;
+    margin-top: 0rem;
+    text-align: center;
+    font-size: 2.8rem;
+  }
+  
+  .dateControls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .datePickerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+  }
+  
+  .datePickerContainer label {
+    font-weight: 600;
+    color: #34495e;
+    font-size: 0.95rem;
+  }
+  
+  .datePickerInput {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 250px;
+    transition: border-color 0.3s;
+  }
+  
+  .datePickerInput:focus {
+    outline: none;
+    border-color: #0c3652;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .weekRange {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 0.3rem;
+  }
+  
+  .fetchButton {
+    padding: 0.6rem 1.2rem;
+    background-color: #2f5772;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+    font-size: 0.95rem;
+  }
+  
+  .fetchButton:hover {
+    background-color: #264e68;
+  }
+  
+  .fetchButton:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  .reportTableContainer {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reportTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .reportTable th {
+    background-color: #3f468a;
+    color: white;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .reportTable td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    color: #243342;
+  }
+  
+  .reportTable tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .reportTable tr:hover {
+    background-color: #f1f9fe;
+  }
+  
+  .noDataMessage {
+    text-align: center;
+    padding: 2rem;
+    color: #0d3235;
+    font-size: 1.1rem;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logoutButton {
+    position: fixed;
+    top: 5vh; 
+    right: 5vw; 
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+  }
+
+  .errorMessage {
+    color: #e74c3c;
+    background-color: #fdecea;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    text-align: center;
+    font-weight: 500;
+  }
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .weeklyReportContainer {
+      padding: 1rem;
+      margin: 1rem;
+    }
+  
+    .dateControls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .datePickerInput {
+      max-width: 100%;
+    }
+  
+    .fetchButton {
+      align-self: stretch;
+      padding: 0.75rem;
+    }
+  
+    .reportTable th,
+    .reportTable td {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reportHeader h2 {
+      font-size: 1.5rem;
+    }
+  
+    .reportTable th,
+    .reportTable td {
+      padding: 0.4rem;
+      font-size: 0.85rem;
+    }
+  }

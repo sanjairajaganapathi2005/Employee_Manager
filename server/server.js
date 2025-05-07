@@ -9,6 +9,7 @@ const productionRoutes = require('./routes/productionRoutes');
 const designerRoutes = require('./routes/designerRoutes');
 const designRoutes = require('./routes/designRoutes');
 const authRoutes = require('./routes/authRoutes');
+const weeklyReportRoute = require('./routes/weeklyReport');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,7 +33,8 @@ app.use('/api/employees', employeeRoutes);
 app.use('/api/productions', productionRoutes);
 app.use('/api/designers', designerRoutes);
 app.use('/api/designs', designRoutes);
-app.use('/api', authRoutes); // for login and register
+app.use('/api', authRoutes); 
+app.use('/api/weekly-report', weeklyReportRoute);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

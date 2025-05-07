@@ -8,7 +8,7 @@ import Register from './pages/register';
 import ProtectedRoute from './components/ProtectedRoute'; 
 import Design from './pages/design';
 import Production from './pages/production';
-
+import WeeklyReport from './pages/weekreport';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -40,6 +40,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           element={
             <ProtectedRoute>
               <Production />
+            </ProtectedRoute>
+          } 
+        />
+         <Route 
+          path="/weekreport" 
+          element={
+            <ProtectedRoute>
+              <WeeklyReport />
             </ProtectedRoute>
           } 
         />

@@ -11,6 +11,12 @@ const Dashboard = () => {
   const handleNavigateToDesign = () => {
     navigate('/design');
   };
+
+  const handleNavigateToWeekReport = () => {
+    navigate('/weekreport');
+  };
+
+
   const handlelogout=()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('loginTime');
@@ -80,6 +86,9 @@ const Dashboard = () => {
         </button>
         <button style={styles.button} onClick={handleNavigateToDesign}>
           Go to Design Management
+        </button>
+        <button style={styles.button} onClick={handleNavigateToWeekReport}>
+          Go to Weekly Report
         </button>
       </div>
     </div>
