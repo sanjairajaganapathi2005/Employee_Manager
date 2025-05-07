@@ -63,6 +63,31 @@
     color: #7f8c8d;
     margin-top: 0.3rem;
   }
+
+
+  
+/* Custom calendar header styles */
+.customHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+  }
+  
+  .customHeader button {
+    margin-top: -0.5rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #3498db;
+  }
+  
+  .monthTitle {
+    font-size: 1.2rem; /* Smaller month name */
+    font-weight: 600;
+    color: #2c3e50;
+  }
   
   .fetchButton {
     padding: 0.6rem 1.2rem;
@@ -145,6 +170,10 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     z-index: 1000;
+  }
+  
+  .logoutButton:hover {
+    background-color: #c0392b;
   }
 
   .errorMessage {

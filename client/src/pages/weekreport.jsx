@@ -3,6 +3,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { getISOWeek, getYear, startOfWeek, endOfWeek, format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/weekreport.module.css';
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
@@ -13,6 +14,7 @@ const WeeklyReport = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [weekRange, setWeekRange] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Initialize week range on first render
   useEffect(() => {
@@ -28,11 +30,11 @@ const WeeklyReport = () => {
     setWeekRange(`${format(monday, 'MMM d')} - ${format(sunday, 'MMM d, yyyy')}`);
   };
 
-  const handlelogout=()=>{
+  const handlelogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('loginTime');
     navigate('/');
-  }
+  };
 
   const fetchReport = async () => {
     setIsLoading(true);
@@ -72,24 +74,46 @@ const WeeklyReport = () => {
     }
   };
 
+  // Custom header to make month name smaller
+  const renderCustomHeader = ({
+    date,
+    decreaseMonth,
+    increaseMonth,
+    prevMonthButtonDisabled,
+    nextMonthButtonDisabled,
+  }) => (
+    <div className={styles.customHeader}>
+      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+        &lt;
+      </button>
+      <div className={styles.monthTitle}>
+        {format(date, 'MMMM yyyy')}
+      </div>
+      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+        &gt;
+      </button>
+    </div>
+  );
+
   return (
     <div className={styles.weeklyReportContainer}>
       <div className={styles.reportHeader}>
         <h2>Weekly Report</h2>
-        <button  className={styles.logoutButton} onClick={handlelogout}>Logout</button>    
+        <button className={styles.logoutButton} onClick={handlelogout}>Logout</button>    
         <div className={styles.dateControls}>
           <div className={styles.datePickerContainer}>
             <label>Select Week: </label>
             <DatePicker
               selected={selectedDate}
               onChange={handleDateChange}
-              showWeekNumbers={false}  // This hides the week numbers
+              showWeekNumbers={false}
               showPopperArrow={false}
               dateFormat="yyyy-MM-dd"
               placeholderText="Select a Monday"
               filterDate={(date) => date.getDay() === 1}
               calendarStartDay={1}
               className={styles.datePickerInput}
+              renderCustomHeader={renderCustomHeader}
             />
             {weekRange && <div className={styles.weekRange}>{weekRange}</div>}
           </div>
