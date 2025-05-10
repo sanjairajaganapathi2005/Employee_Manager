@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from '../styles/production.module.css';  
 import { useNavigate } from 'react-router-dom';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaBars, FaTimes, FaUserPlus } from 'react-icons/fa';
+import { FiPlusCircle } from 'react-icons/fi';
 
 const Production = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [showInput, setShowInput] = useState(false);
@@ -13,6 +14,7 @@ const Production = () => {
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
   const [showLast5, setShowLast5] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -126,15 +128,27 @@ const Production = () => {
       }
     }
   };
-  const handlelogout=()=>{
+
+  const handlelogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('loginTime');
     navigate('/');
-  }
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
+      <button 
+        className={styles.sidebarToggle} 
+        onClick={toggleSidebar}
+        aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+      > {sidebarOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      <div className={`${styles.sidebar} ${sidebarOpen ? styles.open : styles.closed}`}>
         <h2 className={styles.title}>Employees</h2>
         <div className={styles.employeeList}>
           {employees.map((employee) => (
@@ -157,31 +171,31 @@ const Production = () => {
               className={styles.inputBox}
             />
             <button onClick={addEmployee} className={styles.addButton}>
-              Add
+              <FaUserPlus /> Add
             </button>
           </div>
         ) : (
           <button onClick={() => setShowInput(true)} className={styles.addButton}>
-            + Add Employee
+            <FaUserPlus /> Add Employee
           </button>
         )}
       </div>
 
-      <div className={styles.content}>
-      <button className={styles.logoutButton} onClick={handlelogout}>
-              <FaSignOutAlt /> Logout
-            </button>
+      <div className={`${styles.content} ${!sidebarOpen ? styles.expanded : ''}`}>
+        <button className={styles.logoutButton} onClick={handlelogout}>
+          <FaSignOutAlt /> Logout
+        </button>
         {selectedEmployee ? (
           <>
-          <div className={styles.employeeHeader}>
-            <h1>Employee Details</h1>
-          </div>
+            <div className={styles.employeeHeader}>
+              <h1>Employee Details</h1>
+            </div>
             <table className={styles.table}>
-              <thead styles={styles.thead}>
+              <thead>
                 <tr>
                   <th>Date & Time</th>
                   <th>Design</th>
-                  <th>Discription</th>
+                  <th>Description</th>
                   <th>Count</th>
                   <th>Amount</th>
                   <th>Total</th>
@@ -238,7 +252,6 @@ const Production = () => {
                         placeholder="Enter amount"
                       />
                     </td>
-
                     <td>{row.total}</td>
                     <td>
                       {!savedRows[index] ? (
@@ -254,32 +267,30 @@ const Production = () => {
                   </tr>
                 ))}
                 <tr className={styles.totalRow}>
-                  <td colSpan="4"><h3>Grand Total:</h3></td>
+                  <td colSpan="5"><h3>Grand Total:</h3></td>
                   <td><h3>{grandTotal}</h3></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
 
-            {/* Toggle Button */}
             <button onClick={() => setShowLast5(!showLast5)} className={styles.toggleButton}>
               {showLast5 ? "Show Last 15 Rows" : "Show Last 5 Rows"}
             </button>
 
-            {/* Row Count Display */}
             <p className={styles.rowCount}>Showing last {showLast5 ? 5 : 15} rows</p>
 
             <div className={styles.buttons}>
               <button className={styles.addProduction} onClick={addProduction}>
-                + Add Production
+                <FiPlusCircle /> Add Production
               </button>
               <button className={styles.addSalary} onClick={addSalary}>
-                + Add Salary
+                ₹ Add Salary
               </button>
             </div>
           </>
         ) : (
-          <h1>Select an employee to view details</h1>
+          <h1 className={styles.selectPrompt}>Select an employee to view details</h1>
         )}
       </div>
     </div>
