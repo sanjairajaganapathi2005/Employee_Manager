@@ -145,12 +145,11 @@ body {
 .inputBox {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 20px;
   background: rgba(255, 255, 255, 0.1);
   color: rgb(12, 9, 9);
-  outline: none;
   transition: border-color var(--transition-speed) ease;
-  width: 100px;
+  width: 200px;
 }
 
 .inputBox::placeholder {

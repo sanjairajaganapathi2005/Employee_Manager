@@ -143,14 +143,13 @@ body {
 }
 
 .inputBox {
-  padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   font-size: 20px;
   background: rgba(255, 255, 255, 0.1);
-  color: black;
-  outline: none;
+  color: rgb(12, 9, 9);
   transition: border-color var(--transition-speed) ease;
+  width: 200px;
 }
 
 .inputBox::placeholder {
@@ -319,16 +318,20 @@ body {
 
 .addDesign,
 .addSales {
-  padding: 8px 15px;
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 20px;
   cursor: pointer;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   border: none;
   transition: all var(--transition-speed) ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  width:200px;
 }
 
 .addDesign:hover,
