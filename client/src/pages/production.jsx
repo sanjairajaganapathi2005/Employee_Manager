@@ -149,7 +149,7 @@ const Production = () => {
       </button>
 
       <div className={`${styles.sidebar} ${sidebarOpen ? styles.open : styles.closed}`}>
-        <h2 className={styles.title}>Employees</h2>
+        <h2 className={styles.title}>Employees List</h2>
         <div className={styles.employeeList}>
           {employees.map((employee) => (
             <button

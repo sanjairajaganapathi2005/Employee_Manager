@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../styles/design.module.css"; 
 import { useNavigate } from 'react-router-dom';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaBars, FaTimes, FaUserPlus } from 'react-icons/fa';
+import { FiPlusCircle, FiDollarSign } from 'react-icons/fi';
 
 const Design = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Design = () => {
   const [designerName, setDesignerName] = useState("");
   const [rows, setRows] = useState([]);
   const [savedRows, setSavedRows] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -118,11 +120,12 @@ const Design = () => {
       }
     }
   };
-  const handlelogout=()=>{
+
+  const handlelogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('loginTime');
     navigate('/');
-  }
+  };
 
   const nonSalesCount = rows
     .filter((row) => row.coloursales !== "sales")
@@ -148,7 +151,15 @@ const Design = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
+      <button 
+        className={styles.sidebarToggle} 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+      >
+        {sidebarOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      <div className={`${styles.sidebar} ${sidebarOpen ? styles.open : styles.closed}`}>
         <h2 className={styles.title}>Design List</h2>
         <div className={styles.designList}>
           {designers.map((designer) => (
@@ -173,30 +184,30 @@ const Design = () => {
               className={styles.inputBox}
             />
             <button onClick={addDesigner} className={styles.addButton}>
-              OK
+              <FaUserPlus /> Add
             </button>
           </div>
         ) : (
           <button onClick={() => setShowInput(true)} className={styles.addButton}>
-            + Add Design
+            <FaUserPlus /> Add Designer
           </button>
         )}
       </div>
 
-      <div className={styles.content}>
+      <div className={`${styles.content} ${!sidebarOpen ? styles.expanded : ''}`}>
         <button className={styles.logoutButton} onClick={handlelogout}>
-                <FaSignOutAlt /> Logout
-              </button>
+          <FaSignOutAlt /> Logout
+        </button>
         {selectedDesigner ? (
           <>
-          <div className={styles.designHeader}>
-            <h1>Design Details</h1>
-          </div>
+            <div className={styles.designHeader}>
+              <h1>Design Details</h1>
+            </div>
             <table className={styles.table}>
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Design discription</th>
+                  <th>Design Description</th>
                   <th>Person</th>
                   <th>Count</th>
                   <th>Actions</th>
@@ -255,7 +266,7 @@ const Design = () => {
                   <td colSpan="3">
                     <h3>Total count Split up:</h3>
                   </td>
-                  <td colSpan="3">
+                  <td colSpan="2">
                     <h4>
                       {Object.keys(colourTotals).map((colour) => (
                         <div key={colour}>
@@ -278,15 +289,15 @@ const Design = () => {
             </table>
             <div className={styles.buttons}>
               <button className={styles.addDesign} onClick={addDesign}>
-                + Add Design
+                <FiPlusCircle /> Add Design
               </button>
               <button className={styles.addSales} onClick={addSales}>
-                + Add Sales
+                ₹ Add Sales
               </button>
             </div>
           </>
         ) : (
-          <h1>Select a design to view details</h1>
+          <h1 className={styles.selectPrompt}>Select a designer to view details</h1>
         )}
       </div>
     </div>
