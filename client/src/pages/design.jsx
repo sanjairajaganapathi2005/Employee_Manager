@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../styles/design.module.css"; 
 import { useNavigate } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
+
 const Design = () => {
   const navigate = useNavigate();
   const [designers, setDesigners] = useState([]);
@@ -182,7 +184,9 @@ const Design = () => {
       </div>
 
       <div className={styles.content}>
-      <button  className={styles.logoutButton} onClick={handlelogout}>Logout</button>
+        <button className={styles.logoutButton} onClick={handlelogout}>
+                <FaSignOutAlt /> Logout
+              </button>
         {selectedDesigner ? (
           <>
           <div className={styles.designHeader}>
@@ -282,7 +286,7 @@ const Design = () => {
             </div>
           </>
         ) : (
-          <h3 className={styles.selectMessage}>Select a design to view details</h3>
+          <h1>Select a design to view details</h1>
         )}
       </div>
     </div>

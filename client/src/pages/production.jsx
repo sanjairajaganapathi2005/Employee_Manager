@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from '../styles/production.module.css';  
 import { useNavigate } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const Production = () => {
   const navigate=useNavigate();
@@ -167,7 +168,9 @@ const Production = () => {
       </div>
 
       <div className={styles.content}>
-      <button  className={styles.logoutButton} onClick={handlelogout}>Logout</button>
+      <button className={styles.logoutButton} onClick={handlelogout}>
+              <FaSignOutAlt /> Logout
+            </button>
         {selectedEmployee ? (
           <>
           <div className={styles.employeeHeader}>
@@ -276,7 +279,7 @@ const Production = () => {
             </div>
           </>
         ) : (
-          <h1 className={styles.selectMessage}>Select an employee to view details</h1>
+          <h1>Select an employee to view details</h1>
         )}
       </div>
     </div>
