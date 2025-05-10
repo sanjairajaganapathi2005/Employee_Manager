@@ -5,6 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { getISOWeek, getYear, startOfWeek, endOfWeek, format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/weekreport.module.css';
+import { FaSignOutAlt, FaFileAlt, FaCalendarAlt, FaSearch, FaUserTie } from 'react-icons/fa';
+import { GiReceiveMoney, GiPayMoney } from 'react-icons/gi';
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -16,7 +18,6 @@ const WeeklyReport = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Initialize week range on first render
   useEffect(() => {
     const monday = startOfWeek(selectedDate, { weekStartsOn: 1 });
     const sunday = endOfWeek(monday, { weekStartsOn: 1 });
@@ -74,7 +75,6 @@ const WeeklyReport = () => {
     }
   };
 
-  // Custom header to make month name smaller
   const renderCustomHeader = ({
     date,
     decreaseMonth,
@@ -83,13 +83,21 @@ const WeeklyReport = () => {
     nextMonthButtonDisabled,
   }) => (
     <div className={styles.customHeader}>
-      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+      <button 
+        onClick={decreaseMonth} 
+        disabled={prevMonthButtonDisabled}
+        className={styles.navButton}
+      >
         &lt;
       </button>
       <div className={styles.monthTitle}>
         {format(date, 'MMMM yyyy')}
       </div>
-      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+      <button 
+        onClick={increaseMonth} 
+        disabled={nextMonthButtonDisabled}
+        className={styles.navButton}
+      >
         &gt;
       </button>
     </div>
@@ -97,64 +105,111 @@ const WeeklyReport = () => {
 
   return (
     <div className={styles.weeklyReportContainer}>
-      <div className={styles.reportHeader}>
-        <h2>Weekly Report</h2>
-        <button className={styles.logoutButton} onClick={handlelogout}>Logout</button>    
-        <div className={styles.dateControls}>
-          <div className={styles.datePickerContainer}>
-            <label>Select Week: </label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              showWeekNumbers={false}
-              showPopperArrow={false}
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Select a Monday"
-              filterDate={(date) => date.getDay() === 1}
-              calendarStartDay={1}
-              className={styles.datePickerInput}
-              renderCustomHeader={renderCustomHeader}
-            />
-            {weekRange && <div className={styles.weekRange}>{weekRange}</div>}
+      <div className={styles.headerSection}>
+        <div className={styles.headerContent}>
+          <div className={styles.titleSection}>
+            <FaFileAlt className={styles.headerIcon} />
+            <h2>Weekly Production Report</h2>
           </div>
-          <button
-            onClick={fetchReport}
-            className={styles.fetchButton}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Loading...' : 'Get Report'}
+          <button className={styles.logoutButton} onClick={handlelogout}>
+            <FaSignOutAlt /> Logout
           </button>
         </div>
       </div>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      <div className={styles.contentSection}>
+        <div className={styles.controlsCard}>
+          <div className={styles.dateControls}>
+            <div className={styles.datePickerContainer}>
+              <label>
+                <FaCalendarAlt className={styles.controlIcon} /> Select Week:
+              </label>
+              <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                showWeekNumbers={false}
+                showPopperArrow={false}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Select a Monday"
+                filterDate={(date) => date.getDay() === 1}
+                calendarStartDay={1}
+                className={styles.datePickerInput}
+                renderCustomHeader={renderCustomHeader}
+                popperClassName={styles.calendarPopper}
+              />
+              {weekRange && <div className={styles.weekRange}>{weekRange}</div>}
+            </div>
+            <button
+              onClick={fetchReport}
+              className={styles.fetchButton}
+              disabled={isLoading}
+            >
+              <FaSearch /> {isLoading ? 'Loading...' : 'Generate Report'}
+            </button>
+          </div>
+        </div>
 
-      {reportData.length > 0 ? (
-        <div className={styles.reportTableContainer}>
-          <table className={styles.reportTable}>
-            <thead>
-              <tr>
-                <th>Employee Name</th>
-                <th>Total Count</th>
-                <th>Salary</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reportData.map((row, idx) => (
-                <tr key={idx}>
-                  <td>{row.name}</td>
-                  <td>{row.totalCount}</td>
-                  <td>₹{(row.salary * -1).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className={styles.noDataMessage}>
-          {isLoading ? 'Loading report data...' : 'No report data available. Select a week and click "Get Report".'}
-        </div>
-      )}
+        {error && (
+          <div className={styles.errorMessage}>
+            <div className={styles.errorIcon}>⚠️</div>
+            {error}
+          </div>
+        )}
+
+        {reportData.length > 0 ? (
+          <div className={styles.reportCard}>
+            <div className={styles.reportHeader}>
+              <h3>Weekly Summary</h3>
+              <div className={styles.summaryStats}>
+                <div className={styles.statItem}>
+                  <FaUserTie className={styles.statIcon} />
+                  <span>{reportData.length} Employees</span>
+                </div>
+                <div className={styles.statItem}>
+                  <GiReceiveMoney className={styles.statIcon} />
+                  <span>
+                    {reportData.reduce((sum, row) => sum + row.totalCount, 0)} Total Items
+                  </span>
+                </div>
+                <div className={styles.statItem}>
+                  <GiPayMoney className={styles.statIcon} />
+                  <span>
+                    ₹{reportData.reduce((sum, row) => sum + (row.salary * -1), 0).toFixed(2)} Total Salary
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className={styles.reportTableContainer}>
+              <table className={styles.reportTable}>
+                <thead>
+                  <tr>
+                    <th><FaUserTie /> Employee</th>
+                    <th><GiReceiveMoney /> Production</th>
+                    <th><GiPayMoney /> Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportData.map((row, idx) => (
+                    <tr key={idx}>
+                      <td>{row.name}</td>
+                      <td>{row.totalCount}</td>
+                      <td className={styles.salaryCell}>₹{(row.salary * -1).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.noDataCard}>
+            <div className={styles.noDataContent}>
+              <FaFileAlt className={styles.noDataIcon} />
+              <h3>No Report Data Available</h3>
+              <p>Select a week and click "Generate Report" to view data</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

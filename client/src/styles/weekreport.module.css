@@ -1,226 +1,400 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3a0ca3;
+  --accent-color: #4cc9f0;
+  --dark-color: #1b263b;
+  --light-color: #f8f9fa;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition-speed: 0.3s;
+}
+
 .weeklyReportContainer {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 5rem auto;
-    width:90%;
-    height: auto;
-    padding: 1.5rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .reportHeader {
-    margin-bottom: 2rem;
-  }
-  
-  .reportHeader h2 {
-    color: #2c3e50;
-    margin-top: 0rem;
-    text-align: center;
-    font-size: 2.8rem;
-  }
-  
-  .dateControls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  
-  .datePickerContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    flex-grow: 1;
-  }
-  
-  .datePickerContainer label {
-    font-weight: 600;
-    color: #34495e;
-    font-size: 0.95rem;
-  }
-  
-  .datePickerInput {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 250px;
-    transition: border-color 0.3s;
-  }
-  
-  .datePickerInput:focus {
-    outline: none;
-    border-color: #0c3652;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-  }
-  
-  .weekRange {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    margin-top: 0.3rem;
-  }
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  padding: 2rem;
+}
 
+.headerSection {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--card-shadow);
+}
 
-  
-/* Custom calendar header styles */
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.titleSection h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.headerIcon {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.contentSection {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.controlsCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--card-shadow);
+}
+
+.dateControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+}
+
+.datePickerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.datePickerContainer label {
+  font-weight: 600;
+  color: var(--dark-color);
+  font-size:1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controlIcon {
+  color: var(--primary-color);
+}
+
+.datePickerInput {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  width: 90%;
+  max-width: 300px;
+  transition: all var(--transition-speed);
+  background-color: #f8fafc;
+}
+
+.datePickerInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.weekRange {
+  font-size: 1rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.fetchButton {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
+}
+
+.fetchButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+}
+
+.fetchButton:disabled {
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.reportCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);;
+}
+
+.reportHeader {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem;
+  justify-items: center;
+  font-size: 2rem;
+}
+
+.summaryStats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.statIcon {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.reportTableContainer {
+  overflow-x: auto;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.reportTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.reportTable th {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.reportTable th svg {
+  margin-right: 0.5rem;
+}
+
+.reportTable td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 1.3rem;
+}
+
+.reportTable tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.reportTable tr:hover {
+  background-color: #f1f5f9;
+}
+
+.salaryCell {
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.noDataCard {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+
+.noDataContent {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.noDataIcon {
+  font-size: 3rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.noDataContent h3 {
+  color: var(--dark-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.noDataContent p {
+  color: #64748b;
+  margin: 0;
+    font-size: 1.2rem;
+
+}
+
+.errorMessage {
+  background: #fff0f0;
+  color: var(--danger-color);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+.errorIcon {
+  font-size: 1.2rem;
+}
+
+.logoutButton {
+  padding: 0.7rem 1.3rem;
+  background: red;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logoutButton:hover {
+  background: rgba(247, 8, 8);
+  transform: translateY(-2px);
+}
+
+/* Custom header styles */
 .customHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-  }
-  
-  .customHeader button {
-    margin-top: -0.5rem;
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #3498db;
-  }
-  
-  .monthTitle {
-    font-size: 1.2rem; /* Smaller month name */
-    font-weight: 600;
-    color: #2c3e50;
-  }
-  
-  .fetchButton {
-    padding: 0.6rem 1.2rem;
-    background-color: #2f5772;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    align-self: flex-end;
-    font-size: 0.95rem;
-  }
-  
-  .fetchButton:hover {
-    background-color: #264e68;
-  }
-  
-  .fetchButton:disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-  }
-  
-  .reportTableContainer {
-    overflow-x: auto;
-    margin-top: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .reportTable {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-  }
-  
-  .reportTable th {
-    background-color: #3f468a;
-    color: white;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    font-weight: 600;
-  }
-  
-  .reportTable td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #ecf0f1;
-    color: #243342;
-  }
-  
-  .reportTable tr:nth-child(even) {
-    background-color: #f8f9fa;
-  }
-  
-  .reportTable tr:hover {
-    background-color: #f1f9fe;
-  }
-  
-  .noDataMessage {
-    text-align: center;
-    padding: 2rem;
-    color: #0d3235;
-    font-size: 1.1rem;
-    background-color: white;
-    border-radius: 8px;
-    margin-top: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logoutButton {
-    position: fixed;
-    top: 5vh; 
-    right: 5vw; 
-    padding: 10px 20px;
-    background-color: #ff4d4d;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .logoutButton:hover {
-    background-color: #c0392b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-top: 0.5rem;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #64748b;
+  padding: 0 0.5rem;
+}
+
+.navButton:hover {
+  color: var(--primary-color);
+}
+
+.navButton:disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.monthTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.calendarPopper {
+  z-index: 1000 !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .weeklyReportContainer {
+    padding: 1.5rem;
   }
 
-  .errorMessage {
-    color: #e74c3c;
-    background-color: #fdecea;
+  .headerContent {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .titleSection h2 {
+    font-size: 1.5rem;
+  }
+
+  .dateControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .datePickerInput {
+    max-width: 90%;
+  }
+
+  .fetchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .summaryStats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .reportTable th,
+  .reportTable td {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weeklyReportContainer {
     padding: 1rem;
-    border-radius: 6px;
-    margin: 1rem 0;
-    text-align: center;
-    font-weight: 500;
   }
-  /* Responsive styles */
-  @media (max-width: 768px) {
-    .weeklyReportContainer {
-      padding: 1rem;
-      margin: 1rem;
-    }
-  
-    .dateControls {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .datePickerInput {
-      max-width: 100%;
-    }
-  
-    .fetchButton {
-      align-self: stretch;
-      padding: 0.75rem;
-    }
-  
-    .reportTable th,
-    .reportTable td {
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
+
+  .headerSection {
+    padding: 1rem;
   }
-  
-  @media (max-width: 480px) {
-    .reportHeader h2 {
-      font-size: 1.5rem;
-    }
-  
-    .reportTable th,
-    .reportTable td {
-      padding: 0.4rem;
-      font-size: 0.85rem;
-    }
+
+  .titleSection h2 {
+    font-size: 1.3rem;
   }
+
+  .reportHeader h3 {
+    font-size: 1.5rem;
+  }
+
+  .noDataCard {
+    padding: 2rem 1rem;
+  }
+}
